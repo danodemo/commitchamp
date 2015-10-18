@@ -1,9 +1,8 @@
 require 'pry'
-require 'set'
-require 'httparty'
 
-module Githubber
+module Commitchamp
   class GitHelper
+
     include HTTParty
     base_uri "https://api.github.com"
 
@@ -21,3 +20,5 @@ module Githubber
     def contributors(owner, repo)
       self.class.get( "/repos/#{@repo_owner}/#{repo}/stats/contributors", :headers => @auth)
     end
+end
+end
