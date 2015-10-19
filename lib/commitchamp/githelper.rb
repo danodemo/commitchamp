@@ -9,16 +9,21 @@ module Commitchamp
     def initialize(auth_token)
       @auth = {
         "Authorization" => "token #{auth_token}",
-        "User_Agent" => "HTTParty"
+        "User-Agent" => "HTTParty"
       }
-    end
-
-    def list_commits(owner, repo)
-      self.class.get("/repos/#{owner}/#{repo}/commits", :headers => @auth)
+      @repos = []
     end
 
     def contributors(owner, repo)
-      self.class.get( "/repos/#{@repo_owner}/#{repo}/stats/contributors", :headers => @auth)
+      self.class.get( "/repos/#{owner}/#{repo}/stats/contributors", headers: @auth)
+    #binding.pry
     end
+
+    def getrepos(owner, options={})
+      self.class.get("/orgs/#{owner}/repos",
+                    headers: @auth,
+                    body: options.to_json)
+    end
+
 end
 end
